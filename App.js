@@ -1,14 +1,69 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer,DarkTheme } from '@react-navigation/native';
+import React from 'react';
+import { StyleSheet,StatusBar, Text, View } from 'react-native';
+import MovieScreen from './screens/MovieScreen'
+import SettingScreen from './screens/SettingScreen'
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Constants from 'expo-constants'
+
+const TabNavigator = createBottomTabNavigator();
+
+export default class App extends React.Component {
+
+
+render(){
+  return(
+    <NavigationContainer 
+    style={styles.bar}
+    theme={DarkTheme}
+    >
+      <TabNavigator.Navigator 
+       initialRouteName="Movies"
+       tabBarOptions={{
+        activeBackgroundColor:'#711324',
+          inactiveBackgroundColor:'#8d182d',
+        
+          labelStyle:styles.tabs,
+       }}
+       >
+          <TabNavigator.Screen 
+          name="Movies" 
+          component={MovieScreen}
+          options={{
+          title: 'Movies',
+          tabBarIcon:() => (
+         <Ionicons
+         name={`ios-film`}
+          size={30}
+          color={'#fff'}
+          />
+          ),
+          }}
+          
+
+
+          />
+          <TabNavigator.Screen 
+          name="Settings" 
+          component={SettingScreen}  
+          options={{
+            title:'Settings',
+            tabBarIcon:() => (
+         <Ionicons
+         name={`ios-settings`}
+          size={30}
+          color={'#fff'}
+          />
+          )
+          }}
+
+          />
+        </TabNavigator.Navigator>
+    </NavigationContainer>  
+    );
+}
 }
 
 const styles = StyleSheet.create({
@@ -18,4 +73,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  tabs:{
+    fontSize:15,
+    justifyContent:'center',
+    color:'#fff',
+    fontWeight:'Bold',
+
+  },
+  bar:{
+  paddingTop:Constants.statusBarHeight,
+  }
+  
 });
